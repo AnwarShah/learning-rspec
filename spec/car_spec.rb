@@ -4,7 +4,11 @@ describe 'Car' do
   
   describe 'attributes' do 
 
-    let(:car) { Car.new }
+    subject { Car.new }
+
+    # use "subject" instead of let
+    # if variable is subject of the example
+    # let(:car) { Car.new }
 
     # "let" is better than "before" for
     # setting up instance variables
@@ -13,22 +17,22 @@ describe 'Car' do
     # end
 
     it "allows reading and writing for :make" do
-      car.make = 'Test'
-      expect(car.make).to eq('Test')
+      subject.make = 'Test'
+      expect(subject.make).to eq('Test')
     end
 
     it "allows reading and writing for :year" do
-      car.year = 9999
-      expect(car.year).to eq(9999)
+      subject.year = 9999
+      expect(subject.year).to eq(9999)
     end
 
     it "allows reading and writing for :color" do
-      car.color = 'foo'
-      expect(car.color).to eq('foo')
+      subject.color = 'foo'
+      expect(subject.color).to eq('foo')
     end
 
     it "allows reading for :wheels" do
-      expect(car.wheels).to eq(4)
+      expect(subject.wheels).to eq(4)
     end
 
     it "allows writing for :doors"
