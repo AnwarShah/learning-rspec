@@ -1,10 +1,12 @@
 require 'car'
 
-describe 'Car' do
+describe Car do
   
   describe 'attributes' do 
 
-    subject { Car.new }
+    # do not need subjec explicitly defined
+    # if we use a classname after describe
+    # subject { Car.new }
 
     # use "subject" instead of let
     # if variable is subject of the example
