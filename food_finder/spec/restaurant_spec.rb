@@ -7,10 +7,12 @@ describe Restaurant do
   
   describe 'attributes' do
     
-    subject {Restaurant.new}
+    # use implicitly defined subject    
+    # subject {Restaurant.new}
     
     it "allow reading and writing for :name" do
-      expect(subject.name).to eq ''  
+      subject.name = 'Test'
+      expect(subject.name).to eq 'Test'  
     end
 
     it "allow reading and writing for :cuisine" do
@@ -68,7 +70,7 @@ describe Restaurant do
     it 'returns an empty array when @@file is nil' do
       no_output { Restaurant.load_file(nil) }
       restaurants = Restaurant.all
-      expect(restaurants.size).to eq(0)
+      expect(restaurants).to eq([])
     end
     
   end
@@ -93,21 +95,17 @@ describe Restaurant do
     end
     
     context 'with custom options' do
-      subject {Restaurant.new}
       
       it 'allows setting the :name' do
-        subject.name = "New Name"
-        expect(subject.name).to eq "New Name"
+        expect(crescent.name).to eq "Crescent"
       end
 
       it 'allows setting the :cuisine' do
-        subject.cuisine = "Motorola"
-        expect(subject.cuisine).to eq "Motorola"
+        expect(crescent.cuisine).to eq "paleo"
       end
       
       it 'allows setting the :price' do
-        subject.price = 2000
-        expect(subject.price).to eq 2000
+        expect(crescent.price).to eq '321'
       end
       
     end
@@ -116,35 +114,33 @@ describe Restaurant do
   
   describe '#save' do
     
-    subject {Restaurant.new}
-    
     it 'returns false if @@file is nil' do
-      # will auto set nil 
-      Restaurant.load_file('non_existing_file')
-      
-      expect(subject.save).to be false
+      # Don't load a file here
+      expect(Restaurant.file).to be_nil
+
+      expect(crescent.save).to be false
     end
     
     it 'returns false if not valid' do
-      subject.name = '' # make invalid
+      # ensure not invalid because of file load
+      Restaurant.load_file(test_file)
+      expect(Restaurant.file).not_to be_nil
 
       expect(subject.save).to be false
     end
     
     it 'calls append on @@file if valid' do
-      # make a valid subject
-      subject.name = "Pizza-hut"
-      subject.cuisine = "Bangla"
-      subject.price = 123
+      Restaurant.load_file(test_file)
+      expect(Restaurant.file).not_to be_nil
       
       # spying for :append on Resturant.file i.e @@file
-      allow(Restaurant.file).to receive(:append)
+      allow(Restaurant.file).to receive(:append).with(crescent)
       
       # call save on valid object
-      subject.save
+      crescent.save
       
       # expect the call is made
-      expect(Restaurant.file).to have_received(:append)
+      expect(Restaurant.file).to have_received(:append).with(crescent)
     end
     
   end
