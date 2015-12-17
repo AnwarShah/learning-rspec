@@ -4,4 +4,3 @@ pita pocket	Fast food	10
 Quick Cup	coffee	5
 Taste of Little Italy	pizza	10
 Mallard House	New American	35
-Pizza Hut	Fast Food	5.20
